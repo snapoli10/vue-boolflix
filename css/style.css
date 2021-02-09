@@ -1,0 +1,23 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.flex {
+	display: flex;
+}
+
+#movies {
+	margin-top: 50px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.movie-card {
+	width: 250px;
+	min-height: 180px;
+	border: 1px solid black;
+	flex-direction: column;
+	justify-content: space-between;
+}
