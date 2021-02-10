@@ -11,11 +11,12 @@
 	</head>
 	<body>
 		<div id="boolflix">
-			<input type="text" name="searchbar" placeholder="Cerca un film qui" v-model="searchedMovie">
-			<button type="button" @click="searchMovie">Search</button>
+			<input type="text" name="searchbar" placeholder="Cerca un film qui" v-model="searchedEntity">
+			<button type="button" @click="searchEntity">Search</button>
 
-			<div id="movies" class="flex">
-				<div class="movie-card flex" v-for="movie in movies">
+			<div id="media" class="flex">
+				<!-- Film -->
+				<div class="card flex" v-for="movie in movies">
 					<h2>Titolo: {{movie.title}}</h2>
 					<h2>Titolo originale: {{movie.original_title}}</h2>
 					<div class="flex">
@@ -26,6 +27,22 @@
 					</div>
 					<h4>Voto: <i class="fas fa-star" v-for="i in Math.ceil(movie.vote_average / 2)"></i><i class="far fa-star" v-for="i in (5 - Math.ceil(movie.vote_average / 2))"></i></h4>
 				</div>
+				<!-- end Film -->
+
+				<!-- Serie TV -->
+				<div class="card flex" v-for="series in tvSeries">
+					<h2>Titolo: {{series.name}}</h2>
+					<h2>Titolo originale: {{series.original_name}}</h2>
+					<div class="flex">
+						<h3>Lingua originale:</h3>
+						<div class="flagbox flex">
+							<div :class="series.original_language"></div>
+						</div>
+					</div>
+					<h4>Voto: <i class="fas fa-star" v-for="i in Math.ceil(series.vote_average / 2)"></i><i class="far fa-star" v-for="i in (5 - Math.ceil(series.vote_average / 2))"></i></h4>
+				</div>
+				<!-- end Serie TV -->
+				
 			</div>
 		</div>
 

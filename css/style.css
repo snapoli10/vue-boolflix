@@ -15,13 +15,13 @@
 	border: 1px solid black;
 }
 
-#movies {
+#media {
 	margin-top: 50px;
 	flex-wrap: wrap;
 	justify-content: center;
 }
 
-.movie-card {
+.card {
 	width: 300px;
 	min-height: 180px;
 	margin: 20px;
