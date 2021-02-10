@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" charset="utf-8"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 		<link rel="stylesheet" href="css/style.css">
 		<title>Boolflix</title>
 	</head>
@@ -17,7 +18,7 @@
 					<h2>Titolo: {{movie.title}}</h2>
 					<h2>Titolo originale: {{movie.original_title}}</h2>
 					<h3>Lingua originale: {{movie.original_language}}</h3>
-					<h4>Voto: {{movie.vote_average}}</h4>
+					<h4>Voto: <i class="fas fa-star" v-for="i in Math.ceil(movie.vote_average / 2)"></i><i class="far fa-star" v-for="i in (5 - Math.ceil(movie.vote_average / 2))"></i></h4>
 				</div>
 			</div>
 		</div>
