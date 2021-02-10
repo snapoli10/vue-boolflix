@@ -8,6 +8,13 @@
 	display: flex;
 }
 
+.flagbox {
+	margin-left: 10px;
+	width: 50px;
+	height: 30px;
+	border: 1px solid black;
+}
+
 #movies {
 	margin-top: 50px;
 	flex-wrap: wrap;
@@ -15,8 +22,9 @@
 }
 
 .movie-card {
-	width: 250px;
+	width: 300px;
 	min-height: 180px;
+	margin: 20px;
 	border: 1px solid black;
 	flex-direction: column;
 	justify-content: space-between;
