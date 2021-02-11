@@ -4,8 +4,14 @@
 	box-sizing: border-box;
 }
 
-h3 {
-	margin-right: 5px;
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+	font-size: 25px;
+	color: red;
+	font-weight: normal;
 }
 
 .flex {
@@ -13,31 +19,43 @@ h3 {
 }
 
 .flagbox {
-	width: 50px;
-	height: 30px;
-	border: 1px solid black;
+	width: 30px;
+	height: 20px;
 }
 
 .star {
 	color: #F2BD17;
+	font-size: 22px;
 }
 
 .desc {
 	font-size: 19px;
 }
 
-#media {
-	margin-top: 50px;
+header {
+	justify-content: space-between;
+	align-items: flex-end;
+	padding: 0px 25px 15px;
+	background-color: black;
+	min-height: 11vh;
+}
+
+header .searchbar {
+	height: 25px;
+	width: 200px;
+}
+
+main {
+	min-height: 89vh;
 	flex-wrap: wrap;
-	justify-content: center;
+	background-color: #434343;
 }
 
 .card {
-	width: 300px;
+	width: 280px;
 	height: 400px;
 	margin: 20px;
 	border: 1px solid white;
-	justify-content: space-between;
 	background-size: 100% 100%;
 	position: relative;
 }
@@ -53,6 +71,12 @@ h3 {
 	top: 0;
 	left: 0;
 	opacity: .9;
+	overflow-y: auto;
+}
+
+.card .details h3,
+.card .details p {
+	display: inline;
 }
 
 .card:hover .details {

@@ -5,38 +5,53 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" charset="utf-8"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/phoca-flags.css">
 		<title>Boolflix</title>
 	</head>
 	<body>
 		<div id="boolflix">
-			<input type="text" name="searchbar" placeholder="Cerca un film qui" v-model="searchedMedia" @keyup.enter="searchMedia">
-			<button type="button" @click="searchMedia">Search</button>
+			<header class="flex">
+				<h1>BOOLFLIX</h1>
 
-			<div id="media" class="flex">
+				<div>
+					<input type="text" class="searchbar" placeholder="Cerca qualcosa..." v-model="searchedMedia" @keyup.enter="searchMedia">
+					<button type="button" @click="searchMedia">Search</button>
+				</div>
+			</header>
+
+			<main class="flex">
 				<div class="card" v-for="element in media" :style="{'background-image': setPoster(element.poster_path)}">
 					<div class="details">
-						<div class="flex">
+						<div>
 							<h3 v-if="element.title">Titolo:</h3> <span class="desc">{{element.title}}</span>
 							<h3 v-if="element.name">Titolo:</h3> <span class="desc">{{element.name}}</span>
 						</div>
-						<div class="flex">
+
+						<div>
 							<h3 v-if="element.original_title">Titolo originale:</h3> <span class="desc">{{element.original_title}}</span>
 							<h3 v-if="element.original_name">Titolo originale:</h3> <span class="desc">{{element.original_name}}</span>
 						</div>
+
 						<div class="flex">
 							<h3>Lingua originale:</h3>
-							<div class="flagbox flex">
+							<div class="flagbox">
 								<div :class="element.original_language"></div>
 							</div>
 						</div>
-						<div class="flex">
+
+						<div>
 							<h3>Voto:</h3> <i class="fas fa-star star" v-for="i in Math.ceil(element.vote_average / 2)"></i><i class="far fa-star star" v-for="i in (5 - Math.ceil(element.vote_average / 2))"></i>
+						</div>
+
+						<div>
+							<h3 v-if="element.overview">Overview:</h3> <p class="desc">{{element.overview}}</p>
 						</div>
 					</div>
 				</div>
-			</div>
+			</main>
 		</div>
 
 		<script src="js/script.js" charset="utf-8"></script>
