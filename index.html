@@ -11,44 +11,31 @@
 	</head>
 	<body>
 		<div id="boolflix">
-			<input type="text" name="searchbar" placeholder="Cerca un film qui" v-model="searchedEntity">
-			<button type="button" @click="searchEntity">Search</button>
+			<input type="text" name="searchbar" placeholder="Cerca un film qui" v-model="searchedMedia" @keyup.enter="searchMedia">
+			<button type="button" @click="searchMedia">Search</button>
 
 			<div id="media" class="flex">
-				<!-- Film -->
-				<div class="card flex" v-for="movie in movies">
-					<img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" alt="cover" v-if="movie.poster_path !== null"/>
+				<div class="card" v-for="element in media" :style="{'background-image': setPoster(element.poster_path)}">
 					<div class="details">
-						<h2>Titolo: {{movie.title}}</h2>
-						<h2>Titolo originale: {{movie.original_title}}</h2>
+						<div class="flex">
+							<h3 v-if="element.title">Titolo:</h3> <span class="desc">{{element.title}}</span>
+							<h3 v-if="element.name">Titolo:</h3> <span class="desc">{{element.name}}</span>
+						</div>
+						<div class="flex">
+							<h3 v-if="element.original_title">Titolo originale:</h3> <span class="desc">{{element.original_title}}</span>
+							<h3 v-if="element.original_name">Titolo originale:</h3> <span class="desc">{{element.original_name}}</span>
+						</div>
 						<div class="flex">
 							<h3>Lingua originale:</h3>
 							<div class="flagbox flex">
-								<div :class="movie.original_language"></div>
+								<div :class="element.original_language"></div>
 							</div>
 						</div>
-						<h4>Voto: <i class="fas fa-star" v-for="i in Math.ceil(movie.vote_average / 2)"></i><i class="far fa-star" v-for="i in (5 - Math.ceil(movie.vote_average / 2))"></i></h4>
-					</div>
-				</div>
-				<!-- end Film -->
-
-				<!-- Serie TV -->
-				<div class="card flex" v-for="series in tvSeries">
-					<img :src="`https://image.tmdb.org/t/p/w500/${series.poster_path}`" alt="cover" v-if="series.poster_path !== null"/>
-					<div class="details">
-						<h2>Titolo: {{series.name}}</h2>
-						<h2>Titolo originale: {{series.original_name}}</h2>
 						<div class="flex">
-							<h3>Lingua originale:</h3>
-							<div class="flagbox flex">
-								<div :class="series.original_language"></div>
-							</div>
+							<h3>Voto:</h3> <i class="fas fa-star star" v-for="i in Math.ceil(element.vote_average / 2)"></i><i class="far fa-star star" v-for="i in (5 - Math.ceil(element.vote_average / 2))"></i>
 						</div>
-						<h4>Voto: <i class="fas fa-star" v-for="i in Math.ceil(series.vote_average / 2)"></i><i class="far fa-star" v-for="i in (5 - Math.ceil(series.vote_average / 2))"></i></h4>
 					</div>
 				</div>
-				<!-- end Serie TV -->
-
 			</div>
 		</div>
 
