@@ -5,7 +5,8 @@ new Vue ({
 
 	data: {
 		searchedMedia: '',
-		media: []
+		media: [],
+		actors: ''
 	},
 
 	methods: {
@@ -23,11 +24,42 @@ new Vue ({
 				});
 		},
 
+		findCast (mediaId) {
+			return axios
+				.get(`https://api.themoviedb.org/3/movie/${mediaId}/credits?api_key=a12efa1af0ae84b6f6e32a9c870485be&language=it-IT`)
+				.then((castInfo) => {
+					const actorsList = [];
+
+					this.actors = '';
+
+					for (var i = 0; i < 5; i++) {
+						const castMember = castInfo.data.cast[i];
+
+						if (castMember) {
+							actorsList.push(castMember.name);
+						}
+					}
+
+					actorsList.forEach((actor, index) => {
+						if (index !== (actorsList.length - 1)) {
+							this.actors += `${actor}, `;
+						} else {
+							this.actors += actor;
+						}
+					});
+				})
+				.catch(error => { // Nel caso di 404, non mostrare nessun cast
+					if (error.response) {
+						this.actors = '';
+					}
+				});
+		},
+
 		setPoster (path) {
-			if (path !== null) {
+			if (path) {
 				return `url(https://image.tmdb.org/t/p/w500/${path})`;
 			} else {
-				return 'url(https://www.killthebeat.it/wp-content/uploads/2020/01/bianco-punto-interrogativo-su-uno-sfondo-circolare-nero_318-35996.jpg)';
+				return 'url(https://www.altavod.com/assets/images/poster-placeholder.png)';
 			}
 		}
 	}
