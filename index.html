@@ -23,7 +23,7 @@
 			</header>
 
 			<main class="flex">
-				<div class="card" v-for="element in media" :style="{'background-image': setPoster(element.poster_path)}" @mouseenter="findCast(element.id)">
+				<div class="card" v-for="element in media" :style="{'background-image': setPoster(element.poster_path)}" @mouseenter="findCast(element.id), findGenre(element.genre_ids)">
 					<div class="details">
 						<div>
 							<h3 v-if="element.title">Titolo:</h3> <span class="desc">{{element.title}}</span>
@@ -53,6 +53,11 @@
 						<div>
 							<h3 v-if="actors">Cast:</h3> <span class="desc">{{actors}}</span>
 						</div>
+
+						<div>
+							<h3 v-if="genres">Generi:</h3> <span class="desc">{{genres}}</span>
+						</div>
+
 					</div>
 				</div>
 			</main>

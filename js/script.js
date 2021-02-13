@@ -6,7 +6,14 @@ new Vue ({
 	data: {
 		searchedMedia: '',
 		media: [],
-		actors: ''
+		actors: '',
+		totalGenres: [],
+		genres: ''
+	},
+
+	mounted () {
+		this.getGenres('movie');
+		this.getGenres('tv');
 	},
 
 	methods: {
@@ -25,7 +32,7 @@ new Vue ({
 		},
 
 		findCast (mediaId) {
-			return axios
+	 		axios
 				.get(`https://api.themoviedb.org/3/movie/${mediaId}/credits?api_key=a12efa1af0ae84b6f6e32a9c870485be&language=it-IT`)
 				.then((castInfo) => {
 					const actorsList = [];
@@ -55,9 +62,51 @@ new Vue ({
 				});
 		},
 
+		getGenres (category) {
+			axios
+				.get(`https://api.themoviedb.org/3/genre/${category}/list?api_key=e99307154c6dfb0b4750f6603256716d&language=it_IT`)
+				.then((genre) => {
+					genre.data.genres.forEach((newGenre) => {
+						let alreadySaved = false;
+
+						this.totalGenres.forEach((savedGenre) => {
+							if (savedGenre.id === newGenre.id) {
+								alreadySaved = true;
+							}
+						});
+
+						if (!alreadySaved) {
+							this.totalGenres.push(newGenre);
+						}
+					});
+				});
+		},
+
+		findGenre (genreId) {
+			const sameGenre = [];
+
+			this.genres = '';
+
+			genreId.forEach((genre) => {
+				this.totalGenres.forEach((g) => {
+					if (genre === g.id) {
+						sameGenre.push(g.name);
+					}
+				});
+			});
+
+			sameGenre.forEach((element, index) => {
+				if (index !== (sameGenre.length - 1)) {
+					this.genres += `${element}, `;
+				} else {
+					this.genres += element;
+				}
+			});
+		},
+
 		setPoster (path) {
 			if (path) {
-				return `url(https://image.tmdb.org/t/p/w500/${path})`;
+				return `url(https://image.tmdb.org/t/p/w342/${path})`;
 			} else {
 				return 'url(https://www.altavod.com/assets/images/poster-placeholder.png)';
 			}
