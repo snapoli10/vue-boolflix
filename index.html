@@ -18,12 +18,27 @@
 
 				<div>
 					<input type="text" class="searchbar" placeholder="Cerca qualcosa..." v-model="searchedMedia" @keyup.enter="searchMedia">
-					<button type="button" @click="searchMedia">Search</button>
+					<button id="searchButton" type="button" @click="searchMedia">Search</button>
+				</div>
+
+				<div class="filters flex">
+					<span class="filterDesc">Filter for:</span>
+					<div id="categoryFilter">
+						<label for="mediaFilter">Genre</label>
+						<select id="mediaFilter" class="filter" v-model="pickedGenre">
+							<option>All</option>
+							<option v-for="genre in totalGenres">{{genre.name}}</option>
+						</select>
+					</div>
 				</div>
 			</header>
 
 			<main class="flex">
-				<div class="card" v-for="element in media" :style="{'background-image': setPoster(element.poster_path)}" @mouseenter="findCast(element.id), findGenre(element.genre_ids)">
+				<div class="noResult flex">
+					<h2 v-if="searchStarted && media.length === 0">Nessun risultato</h2>
+				</div>
+
+				<div class="card" v-for="element in media" v-if="pickedGenre === 'All' || filterByGenre(element.genre_ids, pickedGenre)" :style="{'background-image': setPoster(element.poster_path)}" @mouseenter="findCast(element.id), findGenre(element.genre_ids)">
 					<div class="details">
 						<div>
 							<h3 v-if="element.title">Titolo:</h3> <span class="desc">{{element.title}}</span>

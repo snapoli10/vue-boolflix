@@ -4,11 +4,13 @@ new Vue ({
 	el: '#boolflix',
 
 	data: {
+		searchStarted: false,
 		searchedMedia: '',
 		media: [],
-		actors: '',
 		totalGenres: [],
-		genres: ''
+		actors: '',
+		genres: '',
+		pickedGenre: 'All',
 	},
 
 	mounted () {
@@ -18,9 +20,12 @@ new Vue ({
 
 	methods: {
 		searchMedia () {
-			this.media = [];
-			this.searchCategory('https://api.themoviedb.org/3/search/movie');
-			this.searchCategory('https://api.themoviedb.org/3/search/tv');
+			if (this.searchedMedia.trim().length !== 0) {
+				this.searchStarted = true;
+				this.media = [];
+				this.searchCategory('https://api.themoviedb.org/3/search/movie');
+				this.searchCategory('https://api.themoviedb.org/3/search/tv');
+			}
 		},
 
 		searchCategory (apiUrl)	{
@@ -29,6 +34,7 @@ new Vue ({
 				.then((element) => {
 					this.media = [...this.media,...element.data.results];
 				});
+
 		},
 
 		findCast (mediaId) {
@@ -82,26 +88,38 @@ new Vue ({
 				});
 		},
 
-		findGenre (genreId) {
-			const sameGenre = [];
-
+		findGenre (genreIds) {
 			this.genres = '';
 
-			genreId.forEach((genre) => {
-				this.totalGenres.forEach((g) => {
-					if (genre === g.id) {
-						sameGenre.push(g.name);
+			genreIds.forEach((id, index) => {
+				this.totalGenres.forEach((genre) => {
+					if (id === genre.id) {
+						if (index !== (genreIds.length - 1)) {
+							this.genres += `${genre.name}, `;
+						} else {
+							this.genres += genre.name;
+						}
+					}
+				});
+			});
+		},
+
+		filterByGenre (genreIds, string) {
+			const genreNames = [];
+
+			genreIds.forEach((id) => {
+				this.totalGenres.forEach((genre) => {
+					if (id === genre.id) {
+						genreNames.push(genre.name);
 					}
 				});
 			});
 
-			sameGenre.forEach((element, index) => {
-				if (index !== (sameGenre.length - 1)) {
-					this.genres += `${element}, `;
-				} else {
-					this.genres += element;
-				}
-			});
+			if (genreNames.includes(string)) {
+				return true;
+			} else {
+				return false;
+			}
 		},
 
 		setPoster (path) {

@@ -45,10 +45,28 @@ header .searchbar {
 	width: 200px;
 }
 
+header .filters {
+	color: white;
+}
+
+header .filterDesc {
+	padding-right: 10px;
+}
+
+header .filter {
+	margin: 0px 5px;
+}
+
 main {
 	min-height: 89vh;
 	flex-wrap: wrap;
 	background-color: #434343;
+}
+
+main .noResult {
+	width: 100vw;
+	align-items: center;
+	justify-content: center;
 }
 
 .card {
